@@ -1,0 +1,278 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════
+   DESIGN SYSTEM — Sricharan Suresh Portfolio
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Tailwind v4 Theme Tokens ── */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-border: var(--border-color);
+  --color-accent-blue: #2D9CDB;
+  --color-accent-orange: #F2994A;
+  --color-accent-blue-dim: #1A6EA8;
+  --color-accent-glow: rgba(45, 156, 219, 0.15);
+
+  --font-display: var(--font-syne);
+  --font-body: var(--font-dm-sans);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+/* ── CSS Custom Properties ── */
+:root {
+  /* Accent Colors (strict — no purple ever) */
+  --accent-blue: #2D9CDB;
+  --accent-orange: #F2994A;
+  --accent-blue-dim: #1A6EA8;
+  --accent-glow: rgba(45, 156, 219, 0.15);
+
+  /* Light Mode (default for CSS, overridden by [data-theme="dark"]) */
+  --background: #F5F3EE;
+  --foreground: #080A0F;
+  --surface: #FFFFFF;
+  --border-color: rgba(0, 0, 0, 0.08);
+  --text-primary: #080A0F;
+  --text-secondary: #4A4A4A;
+  --text-muted: #8A8A8A;
+  --card-bg: rgba(255, 255, 255, 0.8);
+  --card-border: rgba(0, 0, 0, 0.08);
+  --card-hover-border: rgba(0, 0, 0, 0.15);
+  --nav-bg: rgba(245, 243, 238, 0.8);
+  --section-dots: rgba(0, 0, 0, 0.04);
+  --notebook-bg: #FAFAF8;
+  --notebook-line: rgba(0, 0, 0, 0.06);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
+  --shadow-card-hover: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="dark"] {
+  --background: #080A0F;
+  --foreground: #E8E8E8;
+  --surface: #0E1117;
+  --border-color: rgba(255, 255, 255, 0.07);
+  --text-primary: #E8E8E8;
+  --text-secondary: #A0A0A0;
+  --text-muted: #606060;
+  --card-bg: rgba(255, 255, 255, 0.03);
+  --card-border: rgba(255, 255, 255, 0.07);
+  --card-hover-border: rgba(255, 255, 255, 0.15);
+  --nav-bg: rgba(8, 10, 15, 0.8);
+  --section-dots: rgba(255, 255, 255, 0.03);
+  --notebook-bg: #0D1117;
+  --notebook-line: rgba(255, 255, 255, 0.04);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.5);
+  --shadow-card-hover: 0 12px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* ── Base Styles ── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-dm-sans), "DM Sans", sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
+}
+
+/* ── Noise Grain Overlay ── */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+[data-theme="dark"] body::before {
+  opacity: 0.03;
+}
+
+/* ── Grid Dot Pattern (Section Backgrounds) ── */
+.section-dots {
+  background-image: radial-gradient(circle, var(--section-dots) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* ── Typography ── */
+h1, h2, h3, h4 {
+  font-family: var(--font-syne), "Syne", sans-serif;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+h1 {
+  font-weight: 800;
+}
+
+p, span, li, label, input, textarea, select, button {
+  font-family: var(--font-dm-sans), "DM Sans", sans-serif;
+}
+
+code, pre, .font-mono {
+  font-family: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
+}
+
+/* ── Selection ── */
+::selection {
+  background: var(--accent-blue);
+  color: white;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-blue-dim);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-blue);
+}
+
+/* ── Glass Card Utility ── */
+.glass-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 12px;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--card-hover-border);
+  box-shadow: var(--shadow-card-hover);
+}
+
+/* ── Section Number Watermark ── */
+.section-watermark {
+  position: absolute;
+  top: -20px;
+  right: 40px;
+  font-family: var(--font-syne), "Syne", sans-serif;
+  font-weight: 800;
+  font-size: 200px;
+  line-height: 1;
+  opacity: 0.03;
+  color: var(--text-primary);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ── Blinking Cursor ── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.cursor-blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* ── Scroll Indicator ── */
+@keyframes bounce-down {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+.scroll-indicator {
+  animation: bounce-down 2s ease-in-out infinite;
+}
+
+/* ── Ruled Notebook Lines ── */
+.notebook-lines {
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 27px,
+    var(--notebook-line) 27px,
+    var(--notebook-line) 28px
+  );
+}
+
+/* ── Accessible Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .cursor-blink {
+    animation: none;
+    opacity: 1;
+  }
+
+  .scroll-indicator {
+    animation: none;
+  }
+}
+
+/* ── Focus Visible ── */
+*:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── Smooth Link Transitions ── */
+a {
+  transition: color 0.2s ease;
+}
+
+/* ── Tech Badge Base ── */
+.tech-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  font-family: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
+  font-size: 11px;
+  border-radius: 6px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+/* ── Status Dots ── */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-dot.live,
+.status-dot.active,
+.status-dot.complete {
+  background: #27AE60;
+}
+
+.status-dot.published {
+  background: #2D9CDB;
+}
+
+.status-dot.wip,
+.status-dot.research,
+.status-dot.review {
+  background: #F2994A;
+}
